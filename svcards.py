@@ -12,9 +12,7 @@ class Card:
 
 def get_cards():
     response = requests.get(URL)
-    json_data = response.json()['data']
-    card_data = json_data['cards']
-    return card_data
+    return response.json()
 
 def find_index(term, name):
     n = name.lower()
@@ -57,8 +55,12 @@ def card_output(card):
         r = s.substitute(name=c['card_name'], type=t, cost=c['cost'], eff=c['skill_disc'])
     return r
 
-def search_cards(search_term, callback):
-    card_data = get_cards()
+def process_json_data(data):
+    return data['data']['cards']
+
+def search_cards(search_term, callback, json_data=None):
+    js_data = json_data if json_data else get_cards()
+    card_data = process_json_data(js_data)
     cards = create_cards(search_term, card_data)
     filtered_cards = filter_cards(search_term, cards)
     sorted_cards = sort_cards(filtered_cards)
