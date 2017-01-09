@@ -20,7 +20,7 @@ def find_index(term, name):
     return n.find(t)
 
 def is_start_of_word(w, i): 
-    return True if (i == 0 or w[i-1] == " " or w[i-1] == "-") else False
+    return True if (i == 0 or w[i-1] == " " or w[i-1] == "-" or w[i-1] == "'") else False
 
 def create_a_card(search_term, card):
     n = card['card_name']
@@ -39,7 +39,7 @@ def card_sort_value(card):
     return ind if card.start else len(card.json['card_name']) + ind
 
 def sort_cards(cards):
-    return sorted(cards, key=lambda card: card_sort_value(card))
+    return sorted(cards, key=card_sort_value)
 
 def card_output(card):
     c = card.json
